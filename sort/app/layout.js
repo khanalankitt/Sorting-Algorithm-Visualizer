@@ -16,9 +16,13 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={ubuntu.className}>
-        {children}
-      </body>
+      <head>
+        <meta
+          property="og:image"
+          content="/logo.png"
+        />
+      </head>
+      <body className={ubuntu.className}>{children}</body>
     </html>
   );
 }
