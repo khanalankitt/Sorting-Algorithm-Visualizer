@@ -1,24 +1,32 @@
 "use client";
+import Link from "next/link";
 import React, { useEffect, useState } from "react";
 
 function Hero() {
   const [selectedSort, setSelectedSort] = useState("");
   const [barHeight, setBarHeight] = useState([]);
   const [swappingIndices, setSwappingIndices] = useState([]);
-  const [sorting, setSorting] = useState(false); 
+  const [sorting, setSorting] = useState(false);
+  const [rangeValue, setRangeValue] = useState(20);
   const sortingMethods = ["Bubble", "Selection", "Insertion", "Merge", "Quick"];
-    useEffect(()=>{
-        generate();
-    },[]);
+
+  useEffect(() => {
+    generate();
+  }, []);
+
   const handleClick = async (sort) => {
+    generate();
     if (!sorting) {
       setSelectedSort(sort);
       await Sort(sort);
     }
   };
+  const handleRangeValueChange = (e) => {
+    setRangeValue(e.target.value);
+  };
 
   const Sort = async (item) => {
-    setSorting(true); 
+    setSorting(true);
     switch (item) {
       case "Bubble":
         await bubbleSort();
@@ -38,7 +46,7 @@ function Hero() {
       default:
         return;
     }
-    setSorting(false); 
+    setSorting(false);
   };
 
   const bubbleSort = async () => {
@@ -51,7 +59,7 @@ function Hero() {
           [tempArr[j], tempArr[j + 1]] = [tempArr[j + 1], tempArr[j]];
           setBarHeight([...tempArr]);
         }
-        await new Promise((resolve) => setTimeout(resolve, 30));
+        await new Promise((resolve) => setTimeout(resolve, rangeValue));
         setSwappingIndices([]);
       }
     }
@@ -67,7 +75,7 @@ function Hero() {
         if (tempArr[j] < tempArr[minIndex]) {
           minIndex = j;
         }
-        await new Promise((resolve) => setTimeout(resolve, 30));
+        await new Promise((resolve) => setTimeout(resolve, rangeValue));
       }
       [tempArr[i], tempArr[minIndex]] = [tempArr[minIndex], tempArr[i]];
       setBarHeight([...tempArr]);
@@ -86,7 +94,7 @@ function Hero() {
         tempArr[j + 1] = tempArr[j];
         j--;
         setBarHeight([...tempArr]);
-        await new Promise((resolve) => setTimeout(resolve, 30));
+        await new Promise((resolve) => setTimeout(resolve, rangeValue));
       }
       tempArr[j + 1] = key;
       setBarHeight([...tempArr]);
@@ -129,7 +137,7 @@ function Hero() {
         j++;
       }
       setBarHeight([...arr]);
-      await new Promise((resolve) => setTimeout(resolve, 30));
+      await new Promise((resolve) => setTimeout(resolve, rangeValue));
       k++;
     }
     while (i < n1) {
@@ -138,7 +146,7 @@ function Hero() {
       i++;
       k++;
       setBarHeight([...arr]);
-      await new Promise((resolve) => setTimeout(resolve, 30));
+      await new Promise((resolve) => setTimeout(resolve, rangeValue));
     }
     while (j < n2) {
       setSwappingIndices([k]);
@@ -146,7 +154,7 @@ function Hero() {
       j++;
       k++;
       setBarHeight([...arr]);
-      await new Promise((resolve) => setTimeout(resolve, 30));
+      await new Promise((resolve) => setTimeout(resolve, rangeValue));
     }
     setSwappingIndices([]);
   };
@@ -174,7 +182,7 @@ function Hero() {
         i++;
         [arr[i], arr[j]] = [arr[j], arr[i]];
         setBarHeight([...arr]);
-        await new Promise((resolve) => setTimeout(resolve, 30));
+        await new Promise((resolve) => setTimeout(resolve, rangeValue));
       }
     }
     [arr[i + 1], arr[high]] = [arr[high], arr[i + 1]];
@@ -192,9 +200,12 @@ function Hero() {
       setBarHeight(tempArr);
     }
   };
+  const handleCancel = () => {
+    window.location.reload();
+  };
 
   return (
-    <div className="h-[600px] md:h-4/5 w-[95%] md:w-4/5 flex flex-col md:flex-row items-center justify-between border-2 rounded-xl border-gray-400">
+    <div className="h-[670px] md:h-4/5 w-[95%] md:w-4/5 flex flex-col md:flex-row items-center justify-between border-2 rounded-xl border-gray-400">
       <aside className="h-[65%] md:h-full w-full md:w-[20%] self-start md:p-3 flex items-center justify-start md:justify-center flex-col">
         <ul>
           {sortingMethods.map((item, index) => (
@@ -202,7 +213,9 @@ function Hero() {
               key={index}
               className={`text-base md:text-lg p-2 md:mt-1 hover:bg-gray-200 rounded-lg text-left ${
                 selectedSort === item ? "bg-gray-200" : ""
-              } cursor-pointer ${sorting ? "cursor-not-allowed opacity-50" : ""}`}
+              } cursor-pointer ${
+                sorting ? "cursor-not-allowed opacity-50" : ""
+              }`}
               onClick={() => handleClick(item)}
             >
               {item} Sort
@@ -217,12 +230,28 @@ function Hero() {
           onClick={generate}
           disabled={sorting}
         >
-          Generate Random 
+          Generate Random
+        </button>
+        <input
+          type="range"
+          className="mt-3"
+          min={20}
+          max={500}
+          value={rangeValue}
+          onChange={handleRangeValueChange}
+        />
+        <p>{rangeValue}ms</p>
+        <button
+          className={`h-8 flex items-center justify-center md:h-10 w-40 p-1 px-3 bg-red-500 text-white rounded-lg outline-none border-none text-base md:text-lg
+          }`}
+          onClick={handleCancel}
+        >
+          Refresh
         </button>
       </aside>
       <section className="w-full md:w-[90%] h-full flex items-center justify-start flex-col gap-3 p-1 md:p-3">
         <p className="text-lg font-semibold">{selectedSort} Sort</p>
-        <div className="h-full md:h-[90%] w-full md:w-[90%] bg-gray-200 rounded-xl flex items-end justify-center gap-1">
+        <div className="h-full md:h-[90%] w-full md:w-[90%] border-2 border-gray-300 rounded-xl flex items-end justify-center gap-1">
           {barHeight.map((item, index) => (
             <div
               key={index}
@@ -233,10 +262,10 @@ function Hero() {
                   : "orange",
               }}
               className="w-[6px] md:w-5 flex items-end justify-end"
-            >
-            </div>
+            ></div>
           ))}
         </div>
+
       </section>
     </div>
   );
