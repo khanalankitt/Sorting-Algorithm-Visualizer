@@ -211,7 +211,7 @@ function Hero() {
         </ul>
         <br />
         <button
-          className={`h-7 flex items-center justify-center -mt-4 md:mt-0 md:h-10 w-auto p-1 px-3 bg-blue-500 text-white rounded-lg outline-none border-none text-base md:text-lg ${
+          className={`h-8 flex items-center justify-center -mt-4 md:mt-0 md:h-10 w-auto p-1 px-3 bg-blue-500 text-white rounded-lg outline-none border-none text-base md:text-lg ${
             sorting ? "cursor-not-allowed opacity-50" : ""
           }`}
           onClick={generate}
