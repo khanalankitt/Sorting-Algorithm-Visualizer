@@ -194,7 +194,7 @@ function Hero() {
   };
 
   return (
-    <div className="h-full md:h-4/5 w-[95%] md:w-4/5 flex flex-col md:flex-row items-center justify-between border-2 rounded-xl border-gray-400">
+    <div className="h-[600px] md:h-4/5 w-[95%] md:w-4/5 flex flex-col md:flex-row items-center justify-between border-2 rounded-xl border-gray-400">
       <aside className="h-[65%] md:h-full w-full md:w-[20%] self-start md:p-3 flex items-center justify-start md:justify-center flex-col">
         <ul>
           {sortingMethods.map((item, index) => (
