@@ -51,7 +51,7 @@ function Hero() {
           [tempArr[j], tempArr[j + 1]] = [tempArr[j + 1], tempArr[j]];
           setBarHeight([...tempArr]);
         }
-        await new Promise((resolve) => setTimeout(resolve, 20));
+        await new Promise((resolve) => setTimeout(resolve, 30));
         setSwappingIndices([]);
       }
     }
@@ -67,7 +67,7 @@ function Hero() {
         if (tempArr[j] < tempArr[minIndex]) {
           minIndex = j;
         }
-        await new Promise((resolve) => setTimeout(resolve, 20));
+        await new Promise((resolve) => setTimeout(resolve, 30));
       }
       [tempArr[i], tempArr[minIndex]] = [tempArr[minIndex], tempArr[i]];
       setBarHeight([...tempArr]);
@@ -86,7 +86,7 @@ function Hero() {
         tempArr[j + 1] = tempArr[j];
         j--;
         setBarHeight([...tempArr]);
-        await new Promise((resolve) => setTimeout(resolve, 20));
+        await new Promise((resolve) => setTimeout(resolve, 30));
       }
       tempArr[j + 1] = key;
       setBarHeight([...tempArr]);
@@ -129,7 +129,7 @@ function Hero() {
         j++;
       }
       setBarHeight([...arr]);
-      await new Promise((resolve) => setTimeout(resolve, 20));
+      await new Promise((resolve) => setTimeout(resolve, 30));
       k++;
     }
     while (i < n1) {
@@ -138,7 +138,7 @@ function Hero() {
       i++;
       k++;
       setBarHeight([...arr]);
-      await new Promise((resolve) => setTimeout(resolve, 20));
+      await new Promise((resolve) => setTimeout(resolve, 30));
     }
     while (j < n2) {
       setSwappingIndices([k]);
@@ -146,7 +146,7 @@ function Hero() {
       j++;
       k++;
       setBarHeight([...arr]);
-      await new Promise((resolve) => setTimeout(resolve, 20));
+      await new Promise((resolve) => setTimeout(resolve, 30));
     }
     setSwappingIndices([]);
   };
@@ -174,7 +174,7 @@ function Hero() {
         i++;
         [arr[i], arr[j]] = [arr[j], arr[i]];
         setBarHeight([...arr]);
-        await new Promise((resolve) => setTimeout(resolve, 20));
+        await new Promise((resolve) => setTimeout(resolve, 30));
       }
     }
     [arr[i + 1], arr[high]] = [arr[high], arr[i + 1]];
@@ -186,7 +186,7 @@ function Hero() {
   const generate = () => {
     if (!sorting) {
       let tempArr = [];
-      for (let i = 0; i < 36; i++) {
+      for (let i = 0; i < 30; i++) {
         tempArr[i] = Math.floor(Math.random() * 90) + 10;
       }
       setBarHeight(tempArr);
@@ -194,13 +194,13 @@ function Hero() {
   };
 
   return (
-    <div className="h-4/5 w-4/5 flex items-center justify-between border-2 rounded-xl border-black">
-      <aside className="h-full w-[20%] self-start p-3 flex items-center justify-center flex-col">
+    <div className="h-full md:h-4/5 w-[95%] md:w-4/5 flex flex-col md:flex-row items-center justify-between border-2 rounded-xl border-gray-400">
+      <aside className="h-[65%] md:h-full w-full md:w-[20%] self-start md:p-3 flex items-center justify-start md:justify-center flex-col">
         <ul>
           {sortingMethods.map((item, index) => (
             <li
               key={index}
-              className={`text-lg p-2 p3 mt-1 hover:bg-gray-200 rounded-lg text-left ${
+              className={`text-base md:text-lg p-2 md:mt-1 hover:bg-gray-200 rounded-lg text-left ${
                 selectedSort === item ? "bg-gray-200" : ""
               } cursor-pointer ${sorting ? "cursor-not-allowed opacity-50" : ""}`}
               onClick={() => handleClick(item)}
@@ -211,18 +211,18 @@ function Hero() {
         </ul>
         <br />
         <button
-          className={`h-10 w-auto p-1 px-3 bg-blue-500 text-white rounded-lg outline-none border-none text-lg ${
+          className={`h-7 flex items-center justify-center -mt-4 md:mt-0 md:h-10 w-auto p-1 px-3 bg-blue-500 text-white rounded-lg outline-none border-none text-base md:text-lg ${
             sorting ? "cursor-not-allowed opacity-50" : ""
           }`}
           onClick={generate}
           disabled={sorting}
         >
-          Generate Random
+          Generate Random 
         </button>
       </aside>
-      <section className="w-[90%] h-full flex items-center justify-start flex-col gap-3 p-3">
+      <section className="w-full md:w-[90%] h-full flex items-center justify-start flex-col gap-3 p-1 md:p-3">
         <p className="text-lg font-semibold">{selectedSort} Sort</p>
-        <div className="h-[90%] w-[90%] bg-gray-200 rounded-xl flex items-end justify-center gap-1">
+        <div className="h-full md:h-[90%] w-full md:w-[90%] bg-gray-200 rounded-xl flex items-end justify-center gap-1">
           {barHeight.map((item, index) => (
             <div
               key={index}
@@ -232,9 +232,8 @@ function Hero() {
                   ? "blue"
                   : "orange",
               }}
-              className="w-5 flex items-end justify-end"
+              className="w-[6px] md:w-5 flex items-end justify-end"
             >
-              {item}
             </div>
           ))}
         </div>
