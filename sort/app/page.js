@@ -14,7 +14,6 @@ export default function Home() {
       <div className="h-[100vh] w-full flex flex-col items-center justify-start md:gap-5 backdrop-blur-sm">
         <NavBar />
         <p>Created by <Link target="_blank" className="underline" href='https://www.ankitkhanal.me'>Ankit Khanal</Link></p>
-
         <Hero />
       </div>
     </>
